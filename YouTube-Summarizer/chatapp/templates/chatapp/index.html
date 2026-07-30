@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reel &mdash; YouTube Video Q&amp;A</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/chatapp/css/style.css">
+</head>
+<body>
+  {% csrf_token %}
+
+  <div class="page">
+    <header class="masthead">
+      <span class="masthead__mark">&#9656;</span>
+      <div>
+        <h1 class="masthead__title">Reel</h1>
+        <p class="masthead__subtitle">paste a link, ask it anything</p>
+      </div>
+    </header>
+
+    <div class="progress-bar" aria-hidden="true"></div>
+
+    <main class="layout">
+      <!-- Left: video link + summary -->
+      <section class="panel panel--video">
+        <form id="video-form" class="video-form">
+          <label for="video-url" class="field-label">YouTube link</label>
+          <div class="input-row">
+            <input
+              id="video-url"
+              name="video_url"
+              type="url"
+              placeholder="https://www.youtube.com/watch?v=..."
+              autocomplete="off"
+              required
+            >
+            <button type="submit" id="load-btn" class="btn btn--primary">Load</button>
+          </div>
+          <p id="video-error" class="error-text" hidden></p>
+        </form>
+
+        <div id="video-empty" class="empty-state">
+          <p>No video loaded yet.</p>
+          <p class="empty-state__hint">Drop a YouTube URL above to pull its summary in here.</p>
+        </div>
+
+        <article id="video-card" class="video-card" hidden>
+          <span class="video-card__badge" id="video-id-badge">00:00:00</span>
+          <h2 id="video-title" class="video-card__title"></h2>
+          <h3 class="video-card__label">Summary</h3>
+          <p id="video-summary" class="video-card__summary"></p>
+        </article>
+      </section>
+
+      <!-- Right: chat -->
+      <section class="panel panel--chat">
+        <div class="chat-header">
+          <h2 class="chat-header__title">Ask about this video</h2>
+        </div>
+
+        <div id="chat-log" class="chat-log">
+          <div class="chat-placeholder" id="chat-placeholder">
+            Load a video first, then ask questions about it here.
+          </div>
+        </div>
+
+        <form id="chat-form" class="chat-form">
+          <input
+            id="chat-input"
+            type="text"
+            placeholder="Ask something about the video&hellip;"
+            autocomplete="off"
+            disabled
+          >
+          <button type="submit" id="ask-btn" class="btn btn--accent" disabled>Ask</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="foot-note">
+      Build in <code>LangChain</code> &mdash; Powered by <code>Gemini</code>.
+    </footer>
+  </div>
+
+  <script src="/static/chatapp/js/main.js"></script>
+</body>
+</html>
