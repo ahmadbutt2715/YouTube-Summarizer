@@ -14,6 +14,7 @@ def index(request):
 
 @require_POST
 def load_video(request):
+
     try:
         payload = json.loads(request.body or "{}")
     except json.JSONDecodeError:
@@ -30,9 +31,9 @@ def load_video(request):
         return JsonResponse({"error": str(exc)}, status=400)
 
 
-    # Reset chat state for the newly loaded video.
+    request.session.pop("video_id", None)    # explicitly drop the previous video_id
     request.session["video_id"] = video_content.video_id
-    request.session["history"] = []
+
 
     return JsonResponse(
         {
@@ -58,15 +59,11 @@ def ask_question(request):
     if not video_id:
         return JsonResponse({"error": "Load a video before asking questions."}, status=400)
 
-    history = request.session.get("history", [])
 
     try:
-        answer = agents.ask_question(question, history)
+        answer = agents.ask_question(question)
     except Exception as exc:  # noqa: BLE001
         return JsonResponse({"error": str(exc)}, status=400)
 
-    history.append({"role": "user", "content": question})
-    history.append({"role": "assistant", "content": answer})
-    request.session["history"] = history
 
     return JsonResponse({"answer": answer})

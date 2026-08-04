@@ -10,7 +10,7 @@ cookie, so there's nothing to migrate before you run it.
 ## Project layout
 
 ```
-yt_summarizer/
+YouTube_Summarizer/
   pyproject.toml          # uv-managed deps
   manage.py
   config/                 # Django settings/urls
@@ -26,7 +26,7 @@ yt_summarizer/
 ## Run it
 
 ```bash
-cd yt_summarizer
+cd YouTube_Summarizer
 uv sync
 uv run manage.py runserver
 ```
