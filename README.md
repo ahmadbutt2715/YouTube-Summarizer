@@ -28,6 +28,13 @@ YouTube_Summarizer/
 ```bash
 cd YouTube_Summarizer
 uv sync
+```
+
+Before running the server, you'll need a Google API key for Gemini. Create a `.env` file in the project root and add:
+
+You can get a key from [Google AI Studio](https://aistudio.google.com/apikey).
+
+```bash
 uv run manage.py runserver
 ```
 
